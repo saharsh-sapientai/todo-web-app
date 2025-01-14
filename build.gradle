@@ -1,19 +1,19 @@
 plugins {
     id 'war'
-    id 'org.springframework.boot' version '2.1.2.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
-    id 'com.google.cloud.tools.jib' version '1.6.0'
+    id 'org.springframework.boot' version '3.0.1'
+    id 'io.spring.dependency-management' version '1.1.1'
+    id 'com.google.cloud.tools.jib' version '3.3.2'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 version = '1.0.0'
 
 apply from: 'gradle/test-setup.gradle'
 apply from: 'gradle/integration-test.gradle'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -21,7 +21,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-    runtime 'javax.servlet:jstl'
+    runtimeOnly 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
 }

@@ -6,6 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class ToDoServiceImpl implements ToDoService {
 
     private final static MediaType JSON_MEDIA_TYPE = MediaType.get("application/json");
+    private static final Logger log = LoggerFactory.getLogger(ToDoServiceImpl.class);
     private final OkHttpClient client = new OkHttpClient();
 
     @Value("${todo.web.service.url}")
@@ -101,8 +104,11 @@ public class ToDoServiceImpl implements ToDoService {
     private URL buildEndpointUrl(String context) {
         StringBuilder url = new StringBuilder();
         url.append(webServiceUrl);
+        if (!webServiceUrl.endsWith("/") && !context.startsWith("/")) {
+            url.append("/");
+        }
         url.append(context);
-
+        log.info("Endpoint Url: " + url);
         try {
             return new URL(url.toString());
         } catch (MalformedURLException e) {

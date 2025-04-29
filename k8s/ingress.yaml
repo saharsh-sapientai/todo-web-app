@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-web-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /todo-ui(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-web-app-service
+            port:
+              number: 8080

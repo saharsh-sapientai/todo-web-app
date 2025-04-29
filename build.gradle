@@ -21,9 +21,21 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-    runtimeOnly 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
+    
+    // Tomcat dependencies
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    
+    // JSP dependencies
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.0'
+    implementation 'jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0'
+}
+
+bootWar {
+    archiveFileName = 'app.war'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 jib {
@@ -31,6 +43,6 @@ jib {
         image = "bmuschko/todo-web-app:$version"
     }
     container {
-        ports = ['8081']
+        ports = ['8080']
     }
 }
